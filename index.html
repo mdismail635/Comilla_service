@@ -1,507 +1,394 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Multi-Tool Website - Image, PDF, Word, Excel Converter</title>
-  <meta name="description" content="Convert and compress images, PDFs, Word, and Excel files online for free. Easy-to-use tools for all your file conversion needs.">
-  <meta name="keywords" content="image converter, PDF to JPG, JPG to PDF, Word to Docs, Docs to Word, Excel to Docs, Docs to Excel, file converter, online tools">
-  <meta name="author" content="Your Name">
-  <meta name="robots" content="index, follow">
-  <meta property="og:title" content="Multi-Tool Website - Image, PDF, Word, Excel Converter">
-  <meta property="og:description" content="Convert and compress images, PDFs, Word, and Excel files online for free. Easy-to-use tools for all your file conversion needs.">
-  <meta property="og:image" content="https://yourwebsite.com/logo.png">
-  <meta property="og:url" content="https://yourwebsite.com">
-  <meta property="og:type" content="website">
-  <link rel="canonical" href="https://yourwebsite.com">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Multi-Tool Website",
-    "url": "https://yourwebsite.com",
-    "description": "Convert and compress images, PDFs, Word, and Excel files online for free. Easy-to-use tools for all your file conversion needs.",
-    "author": {
-      "@type": "Person",
-      "name": "Your Name"
-    }
-  }
-  </script>
-  <!-- Google AdSense Code -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1001658435223422"
-    crossorigin="anonymous"></script>
-  <style>
-    /* Your existing CSS styles */
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      color: #333;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Tools</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            transition: background-color 0.3s ease;
+        }
 
-    .container {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      text-align: center;
-      max-width: 800px;
-      width: 100%;
-    }
+        .dark-mode {
+            background-color: #2f2f2f;
+            color: #e1e1e1;
+        }
 
-    h1 {
-      margin-bottom: 20px;
-      font-size: 28px;
-      color: #2575fc;
-    }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 700px;
+            margin: 20px auto;
+        }
 
-    .tool-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin-top: 20px;
-    }
+        input[type="file"], button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
 
-    .tool-card {
-      background: #fff;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      text-decoration: none;
-      color: #333;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+        input[type="file"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
 
-    .tool-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
 
-    .tool-card h2 {
-      font-size: 20px;
-      margin-bottom: 10px;
-      color: #2575fc;
-    }
+        button:hover {
+            background-color: #45a049;
+        }
 
-    .tool-card p {
-      font-size: 14px;
-      color: #666;
-    }
+        .theme-toggle {
+            padding: 10px 15px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px;
+        }
 
-    .footer {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #666;
-    }
+        .theme-toggle:hover {
+            background-color: #555;
+        }
 
-    .footer a {
-      color: #2575fc;
-      text-decoration: none;
-    }
+        h1 {
+            color: #333;
+        }
 
-    .footer a:hover {
-      text-decoration: underline;
-    }
+        img {
+            max-width: 100%;
+            max-height: 300px;
+            margin-top: 20px;
+        }
 
-    input[type="file"] {
-      display: none;
-    }
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background-color: #e1e1e1;
+            margin-top: 20px;
+            border-radius: 3px;
+            overflow: hidden;
+            display: none;
+        }
 
-    .upload-label {
-      display: inline-block;
-      padding: 12px 24px;
-      background: #2575fc;
-      color: #fff;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
+        .progress-bar span {
+            display: block;
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0;
+            transition: width 0.3s ease;
+        }
 
-    .upload-label:hover {
-      background: #1a5bbf;
-    }
+        #compressedPreview img {
+            max-width: 50%;
+        }
 
-    button {
-      padding: 12px 24px;
-      margin: 10px;
-      border: none;
-      background: #6a11cb;
-      color: #fff;
-      border-radius: 25px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background 0.3s ease, transform 0.2s ease;
-    }
+        .file-info {
+            margin-top: 10px;
+            font-size: 16px;
+        }
 
-    button:hover {
-      background: #4d0c9a;
-      transform: translateY(-2px);
-    }
+        #downloadBtn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
 
-    .output {
-      margin-top: 20px;
-    }
+        #downloadBtn:hover {
+            background-color: #45a049;
+        }
 
-    #preview {
-      max-width: 100%;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      margin-top: 20px;
-    }
+        .tools-container {
+            margin-top: 30px;
+            text-align: left;
+        }
 
-    #downloadLink, #downloadPdfToJpgLink, #downloadJpgToPdfLink, #downloadWordToDocsLink, #downloadDocsToWordLink, #downloadExcelToDocsLink, #downloadDocsToExcelLink {
-      display: none;
-      margin-top: 20px;
-      padding: 12px 24px;
-      background: #25d366;
-      color: #fff;
-      border-radius: 25px;
-      text-decoration: none;
-      transition: background 0.3s ease;
-    }
+        .tools-container div {
+            margin: 15px 0;
+        }
+        
+        .ads-container {
+            margin: 20px 0;
+        }
+    </style>
 
-    #downloadLink:hover, #downloadPdfToJpgLink:hover, #downloadJpgToPdfLink:hover, #downloadWordToDocsLink:hover, #downloadDocsToWordLink:hover, #downloadExcelToDocsLink:hover, #downloadDocsToExcelLink:hover {
-      background: #1da851;
-    }
-  </style>
+    <!-- Google Ads Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
 <body>
-  <!-- Header Ad Unit -->
-  <div class="ad-unit">
-    <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-1001658435223422"
-      data-ad-slot="YOUR_AD_SLOT_ID"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
+
+    <div class="container">
+        <h1>Image Tools</h1>
+
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
+
+        <!-- Google AdSense Ad Unit -->
+        <div class="ads-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="pub-1001658435223422" <!-- Your AdSense client ID -->
+                 data-ad-slot="XXXXXXX" <!-- Replace with your specific ad slot ID -->
+                 data-ad-format="auto"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <!-- Image Compression Tool -->
+        <input type="file" id="fileInput" accept="image/*">
+        <button id="compressBtn">Compress Image</button>
+
+        <div class="progress-bar" id="progressBar"><span></span></div>
+
+        <div id="imagePreview">
+            <h3>Original Image:</h3>
+            <img id="originalImage" src="" alt="Your image will appear here" />
+        </div>
+
+        <div id="compressedPreview">
+            <h3>Compressed Image:</h3>
+            <img id="compressedImage" src="" alt="Compressed image will appear here" />
+        </div>
+
+        <div class="file-info">
+            <p>Original size: <span id="originalSize">0 KB</span></p>
+            <p>Compressed size: <span id="compressedSize">0 KB</span></p>
+        </div>
+
+        <button id="downloadBtn">Download Compressed Image</button>
+
+        <!-- Tools Section -->
+        <div class="tools-container">
+            <h2>Additional Image Tools</h2>
+            <!-- Resizer Tool -->
+            <div>
+                <h3>Resize Image</h3>
+                <input type="number" id="resizeWidth" placeholder="Width (px)">
+                <input type="number" id="resizeHeight" placeholder="Height (px)">
+                <button onclick="resizeImage()">Resize Image</button>
+                <div id="resizedPreview">
+                    <h3>Resized Image:</h3>
+                    <img id="resizedImage" src="" alt="Resized image will appear here" />
+                </div>
+            </div>
+
+            <!-- Converter Tool -->
+            <div>
+                <h3>Convert Image Format</h3>
+                <button onclick="convertImage()">Convert to PNG</button>
+                <div id="convertedPreview">
+                    <h3>Converted Image:</h3>
+                    <img id="convertedImage" src="" alt="Converted image will appear here" />
+                </div>
+            </div>
+
+            <!-- Cropper Tool -->
+            <div>
+                <h3>Crop Image</h3>
+                <input type="number" id="cropX" placeholder="X Coordinate">
+                <input type="number" id="cropY" placeholder="Y Coordinate">
+                <input type="number" id="cropWidth" placeholder="Width">
+                <input type="number" id="cropHeight" placeholder="Height">
+                <button onclick="cropImage()">Crop Image</button>
+                <div id="croppedPreview">
+                    <h3>Cropped Image:</h3>
+                    <img id="croppedImage" src="" alt="Cropped image will appear here" />
+                </div>
+            </div>
+
+            <!-- Filter Tool -->
+            <div>
+                <h3>Apply Filter to Image</h3>
+                <button onclick="applyFilter('grayscale')">Grayscale</button>
+                <button onclick="applyFilter('sepia')">Sepia</button>
+                <button onclick="applyFilter('brightness')">Brightness</button>
+                <div id="filteredPreview">
+                    <h3>Filtered Image:</h3>
+                    <img id="filteredImage" src="" alt="Filtered image will appear here" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image compression library -->
+    <script src="https://cdn.jsdelivr.net/npm/compressorjs/dist/compressor.min.js"></script>
+
     <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
+        let selectedImage = null;
+        let compressedImageURL = null;
+
+        // Toggle dark/light mode
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // Handle file selection
+        document.getElementById("fileInput").addEventListener("change", handleFileSelect);
+        document.getElementById("compressBtn").addEventListener("click", compressImage);
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imgElement = document.getElementById("originalImage");
+                    imgElement.src = e.target.result;
+                    selectedImage = file;
+
+                    // Display original size
+                    const sizeInKB = (file.size / 1024).toFixed(2);
+                    document.getElementById("originalSize").textContent = sizeInKB + " KB";
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert("Please select an image file.");
+            }
+        }
+
+        // Compress the image
+        function compressImage() {
+            if (!selectedImage) {
+                alert("Please select an image first.");
+                return;
+            }
+
+            document.getElementById("progressBar").style.display = "block";
+
+            new Compressor(selectedImage, {
+                quality: 0.6, 
+                success(result) {
+                    document.getElementById("progressBar").querySelector('span').style.width = '100%';
+                    compressedImageURL = URL.createObjectURL(result);
+                    const compressedImageElement = document.getElementById("compressedImage");
+                    compressedImageElement.src = compressedImageURL;
+
+                    const sizeInKB = (result.size / 1024).toFixed(2);
+                    document.getElementById("compressedSize").textContent = sizeInKB + " KB";
+
+                    document.getElementById("downloadBtn").style.display = "inline-block";
+                    document.getElementById("downloadBtn").onclick = function () {
+                        const a = document.createElement('a');
+                        a.href = compressedImageURL;
+                        a.download = "compressed_image.jpg";
+                        a.click();
+                    };
+                },
+                error(err) {
+                    console.error("Compression error:", err);
+                    document.getElementById("progressBar").style.display = "none";
+                }
+            });
+        }
+
+        // Resize the image
+        function resizeImage() {
+            const width = document.getElementById("resizeWidth").value;
+            const height = document.getElementById("resizeHeight").value;
+
+            if (!width || !height) {
+                alert("Please enter both width and height.");
+                return;
+            }
+
+            const img = document.getElementById("originalImage");
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(img, 0, 0, width, height);
+
+            const resizedImageURL = canvas.toDataURL();
+            document.getElementById("resizedImage").src = resizedImageURL;
+        }
+
+        // Convert the image to PNG format
+        function convertImage() {
+            const img = document.getElementById("originalImage");
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+
+            const convertedImageURL = canvas.toDataURL("image/png");
+            document.getElementById("convertedImage").src = convertedImageURL;
+        }
+
+        // Crop the image
+        function cropImage() {
+            const x = document.getElementById("cropX").value;
+            const y = document.getElementById("cropY").value;
+            const width = document.getElementById("cropWidth").value;
+            const height = document.getElementById("cropHeight").value;
+
+            if (!x || !y || !width || !height) {
+                alert("Please enter all crop values.");
+                return;
+            }
+
+            const img = document.getElementById("originalImage");
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(img, x, y, width, height, 0, 0, width, height);
+
+            const croppedImageURL = canvas.toDataURL();
+            document.getElementById("croppedImage").src = croppedImageURL;
+        }
+
+        // Apply filters to the image
+        function applyFilter(filterType) {
+            const img = document.getElementById("originalImage");
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+
+            switch (filterType) {
+                case "grayscale":
+                    ctx.filter = "grayscale(100%)";
+                    break;
+                case "sepia":
+                    ctx.filter = "sepia(100%)";
+                    break;
+                case "brightness":
+                    ctx.filter = "brightness(1.5)";
+                    break;
+            }
+
+            ctx.drawImage(img, 0, 0);
+            const filteredImageURL = canvas.toDataURL();
+            document.getElementById("filteredImage").src = filteredImageURL;
+        }
     </script>
-  </div>
 
-  <!-- Home Page -->
-  <div class="container" id="homePage">
-    <h1>Welcome to Multi-Tool Website</h1>
-    <p>Choose a tool to get started:</p>
-    <div class="tool-grid">
-      <a href="#imageTool" class="tool-card">
-        <h2>Image Compressor & Converter</h2>
-        <p>Compress and convert images to JPG or PNG.</p>
-      </a>
-      <a href="#pdfToJpgTool" class="tool-card">
-        <h2>PDF to JPG</h2>
-        <p>Convert PDF files to JPG images.</p>
-      </a>
-      <a href="#jpgToPdfTool" class="tool-card">
-        <h2>JPG to PDF</h2>
-        <p>Convert JPG images to PDF files.</p>
-      </a>
-      <a href="#wordToDocsTool" class="tool-card">
-        <h2>Word to Docs</h2>
-        <p>Convert Word files to Google Docs format.</p>
-      </a>
-      <a href="#docsToWordTool" class="tool-card">
-        <h2>Docs to Word</h2>
-        <p>Convert Google Docs to Word files.</p>
-      </a>
-      <a href="#excelToDocsTool" class="tool-card">
-        <h2>Excel to Docs</h2>
-        <p>Convert Excel files to Google Docs format.</p>
-      </a>
-      <a href="#docsToExcelTool" class="tool-card">
-        <h2>Docs to Excel</h2>
-        <p>Convert Google Docs to Excel files.</p>
-      </a>
-    </div>
-    <div class="footer">
-      Made with ❤️ by <a href="#" target="_blank">Md Ismail</a>
-    </div>
-  </div>
-
-  <!-- Image Tool -->
-  <div class="container" id="imageTool" style="display: none;">
-    <h1>Image Compressor & Converter</h1>
-    <label for="imageInput" class="upload-label">Upload Image</label>
-    <input type="file" id="imageInput" accept="image/*">
-    <div class="options">
-      <button id="compressBtn">Compress Image</button>
-      <button id="convertToJpg">Convert to JPG</button>
-      <button id="convertToPng">Convert to PNG</button>
-    </div>
-    <div class="output">
-      <img id="preview" src="#" alt="Preview">
-      <a id="downloadLink" download="converted_image.png">Download</a>
-    </div>
-    <div class="footer">
-      <a href="#homePage">← Back to Home</a>
-    </div>
-  </div>
-
-  <!-- PDF to JPG Tool -->
-  <div class="container" id="pdfToJpgTool" style="display: none;">
-    <h1>PDF to JPG Converter</h1>
-    <label for="pdfInput" class="upload-label">Upload PDF</label>
-    <input type="file" id="pdfInput" accept="pdf/*">
-    <button id="convertJpg">Convert to JPG</button>
-    <div class="output">
-      <img id="Preview" src="#" alt="Preview">
-      <a id="downloadLink" download="converted_image.jpg">Download</a>
-    </div>
-    <div class="footer">
-      <a href="#homePage">← Back to Home</a>
-    </div>
-  </div>
-
-  <!-- JPG to PDF Tool -->
-  <div class="container" id="jpgToPdfTool" style="display: none;">
-    <h1>JPG to PDF Converter</h1>
-    <label for="jpgToPdfInput" class="upload-label">Upload JPG</label>
-    <input type="file" id="jpgInput" accept="image/jpeg">
-    <button id="convertPdf">Convert to PDF</button>
-    <div class="output">
-      <a id="downloadLink" download="converted_file.pdf">Download</a>
-    </div>
-    <div class="footer">
-      <a href="#homePage">← Back to Home</a>
-    </div>
-  </div>
-
-  <!-- Word to Docs Tool -->
-  <div class="container" id="wordToDocsTool" style="display: none;">
-    <h1>Word to Docs Converter</h1>
-    <label for="wordInput" class="upload-label">Upload Word File</label>
-    <input type="file" id="wordInput" accept=".doc, .docx">
-    <button id="convertDocs">Convert to Docs</button>
-    <div class="output">
-      <a id="downloadLink" download="converted_file.docx">Download</a>
-    </div>
-    <div class="footer">
-      <a href="#homePage">← Back to Home</a>
-    </div>
-  </div>
-
-  <!-- Docs to Word Tool -->
-  <div class="container" id="docsToWordTool" style="display: none;">
-    <h1>Docs to Word Converter</h1>
-    <label for="docsToWordInput" class="upload-label">Upload Docs File</label>
-    <input type="file" id="docsToWordInput" accept=".docx">
-    <button id="convertDocsToWord">Convert to Word</button>
-    <div class="output">
-      <a id="downloadDocsToWordLink" download="converted_file.docx">Download</a>
-    </div>
-    <div class="footer">
-      <a href="#homePage">← Back to Home</a>
-    </div>
-  </div>
-
-  <!-- Excel to Docs Tool -->
-  <div class="container" id="excelToDocsTool" style="display: none;">
-    <h1>Excel to Docs Converter</h1>
-    <label for="excelToDocsInput" class="upload-label">Upload Excel File</label>
-    <input type="file" id="excelToDocsInput" accept=".xls, .xlsx">
-    <button id="convertExcelToDocs">Convert to Docs</button>
-    <div class="output">
-      <a id="downloadExcelToDocsLink" download="converted_file.docx">Download</a>
-    </div>
-    <div class="footer">
-      <a href="#homePage">← Back to Home</a>
-    </div>
-  </div>
-
-  <!-- Docs to Excel Tool -->
-  <div class="container" id="docsToExcelTool" style="display: none;">
-    <h1>Docs to Excel Converter</h1>
-    <label for="docsToExcelInput" class="upload-label">Upload Docs File</label>
-    <input type="file" id="docsToExcelInput" accept=".docx">
-    <button id="convertDocsToExcel">Convert to Excel</button>
-    <div class="output">
-      <a id="downloadDocsToExcelLink" download="converted_file.xlsx">Download</a>
-    </div>
-    <div class="footer">
-      <a href="#homePage">← Back to Home</a>
-    </div>
-  </div>
-
-  <!-- Footer Ad Unit -->
-  <div class="ad-unit">
-    <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-1001658435223422"
-      data-ad-slot="YOUR_AD_SLOT_ID"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  </div>
-
-  <script>
-    // Navigation Logic
-    document.querySelectorAll('.tool-card').forEach(card => {
-      card.addEventListener('click', (e) => {
-        e.preventDefault();
-        const target = card.getAttribute('href');
-        document.querySelectorAll('.container').forEach(page => {
-          page.style.display = 'none';
-        });
-        document.querySelector(target).style.display = 'block';
-      });
-    });
-
-    document.querySelectorAll('.footer a').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.querySelectorAll('.container').forEach(page => {
-          page.style.display = 'none';
-        });
-        document.querySelector('#homePage').style.display = 'block';
-      });
-    });
-
-    // Image Tool Logic
-    const imageInput = document.getElementById('imageInput');
-    const compressBtn = document.getElementById('compressBtn');
-    const convertToJpg = document.getElementById('convertToJpg');
-    const convertToPng = document.getElementById('convertToPng');
-    const preview = document.getElementById('preview');
-    const downloadLink = document.getElementById('downloadLink');
-
-    let uploadedImage = null;
-
-    imageInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          uploadedImage = event.target.result;
-          preview.src = uploadedImage;
-          preview.style.display = 'block';
-          downloadLink.style.display = 'none';
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-
-    compressBtn.addEventListener('click', () => {
-      if (!uploadedImage) return alert('Please upload an image first!');
-      compressImage(uploadedImage, 0.7);
-    });
-
-    convertToJpg.addEventListener('click', () => {
-      if (!uploadedImage) return alert('Please upload an image first!');
-      convertImage('image/jpeg');
-    });
-
-    convertToPng.addEventListener('click', () => {
-      if (!uploadedImage) return alert('Please upload an image first!');
-      convertImage('image/png');
-    });
-
-    function compressImage(src, quality) {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-
-        canvas.toBlob(
-          (blob) => {
-            const url = URL.createObjectURL(blob);
-            preview.src = url;
-            downloadLink.href = url;
-            downloadLink.download = `compressed_image.${blob.type.split('/')[1]}`;
-            downloadLink.style.display = 'block';
-          },
-          'image/jpeg',
-          quality
-        );
-      };
-    }
-
-    function convertImage(format) {
-      const img = new Image();
-      img.src = uploadedImage;
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-
-        canvas.toBlob((blob) => {
-          const url = URL.createObjectURL(blob);
-          preview.src = url;
-          downloadLink.href = url;
-          downloadLink.download = `converted_image.${format.split('/')[1]}`;
-          downloadLink.style.display = 'block';
-        }, format);
-      };
-    }
-
-    // PDF to JPG Tool Logic (Placeholder)
-    const pdfToJpgInput = document.getElementById('pdfToJpgInput');
-    const convertPdfToJpg = document.getElementById('convertPdfToJpg');
-    const pdfToJpgPreview = document.getElementById('pdfToJpgPreview');
-    const downloadPdfToJpgLink = document.getElementById('downloadPdfToJpgLink');
-
-    convertPdfToJpg.addEventListener('click', () => {
-      alert('PDF to JPG functionality is not implemented yet.');
-    });
-
-    // JPG to PDF Tool Logic (Placeholder)
-    const jpgToPdfInput = document.getElementById('jpgToPdfInput');
-    const convertJpgToPdf = document.getElementById('convertJpgToPdf');
-    const downloadJpgToPdfLink = document.getElementById('downloadJpgToPdfLink');
-
-    convertJpgToPdf.addEventListener('click', () => {
-      alert('JPG to PDF functionality is not implemented yet.');
-    });
-
-    // Word to Docs Tool Logic (Placeholder)
-    const wordToDocsInput = document.getElementById('wordToDocsInput');
-    const convertWordToDocs = document.getElementById('convertWordToDocs');
-    const downloadWordToDocsLink = document.getElementById('downloadWordToDocsLink');
-
-    convertWordToDocs.addEventListener('click', () => {
-      alert('Word to Docs functionality is not implemented yet.');
-    });
-
-    // Docs to Word Tool Logic (Placeholder)
-    const docsToWordInput = document.getElementById('docsToWordInput');
-    const convertDocsToWord = document.getElementById('convertDocsToWord');
-    const downloadDocsToWordLink = document.getElementById('downloadDocsToWordLink');
-
-    convertDocsToWord.addEventListener('click', () => {
-      alert('Docs to Word functionality is not implemented yet.');
-    });
-
-    // Excel to Docs Tool Logic (Placeholder)
-    const excelToDocsInput = document.getElementById('excelToDocsInput');
-    const convertExcelToDocs = document.getElementById('convertExcelToDocs');
-    const downloadExcelToDocsLink = document.getElementById('downloadExcelToDocsLink');
-
-    convertExcelToDocs.addEventListener('click', () => {
-      alert('Excel to Docs functionality is not implemented yet.');
-    });
-
-    // Docs to Excel Tool Logic (Placeholder)
-    const docsToExcelInput = document.getElementById('docsToExcelInput');
-    const convertDocsToExcel = document.getElementById('convertDocsToExcel');
-    const downloadDocsToExcelLink = document.getElementById('downloadDocsToExcelLink');
-
-    convertDocsToExcel.addEventListener('click', () => {
-      alert('Docs to Excel functionality is not implemented yet.');
-    });
-  </script>
 </body>
 </html>
