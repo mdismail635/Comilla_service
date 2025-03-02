@@ -5,77 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Tools</title>
     <style>
-        /* Basic styling */
+        /* General body and layout styling */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
-            background-color: #f4f4f4;
+            background-color: #f0f2f5;
             transition: background-color 0.3s ease;
-        }
-
-        .dark-mode {
-            background-color: #2f2f2f;
-            color: #e1e1e1;
-        }
-
-        .container {
-            text-align: center;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            max-width: 700px;
-            margin: 20px auto;
-        }
-
-        input[type="file"], button {
-            padding: 10px 20px;
-            margin: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-        }
-
-        input[type="file"] {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        .theme-toggle {
-            padding: 10px 15px;
-            background-color: #333;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            margin: 10px;
-        }
-
-        .theme-toggle:hover {
-            background-color: #555;
-        }
-
-        h1 {
             color: #333;
         }
 
+        .dark-mode {
+            background-color: #2e2e2e;
+            color: #ddd;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .theme-toggle {
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px;
+            font-size: 16px;
+        }
+
+        .theme-toggle:hover {
+            background-color: #45a049;
+        }
+
+        h1 {
+            color: #4CAF50;
+            font-size: 2.5em;
+        }
+
+        .ads-container {
+            margin-top: 30px;
+        }
+
+        /* Google Ads Styling */
+        ins.adsbygoogle {
+            display: block;
+            margin-top: 30px;
+            max-width: 100%;
+            background: #f4f4f4;
+            padding: 20px 0;
+        }
+
+        /* Image preview styles */
         img {
             max-width: 100%;
-            max-height: 300px;
             margin-top: 20px;
+            border-radius: 8px;
         }
 
         .progress-bar {
@@ -96,23 +87,16 @@
             transition: width 0.3s ease;
         }
 
-        #compressedPreview img {
-            max-width: 50%;
-        }
-
-        .file-info {
-            margin-top: 10px;
-            font-size: 16px;
-        }
-
         #downloadBtn {
-            padding: 10px 20px;
+            padding: 12px 20px;
             background-color: #4CAF50;
             color: white;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
+            border-radius: 5px;
             display: none;
+            font-size: 16px;
+            margin-top: 20px;
         }
 
         #downloadBtn:hover {
@@ -125,11 +109,79 @@
         }
 
         .tools-container div {
-            margin: 15px 0;
+            margin: 25px 0;
+        }
+
+        .tools-container input, .tools-container button {
+            padding: 12px;
+            font-size: 16px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            max-width: 300px;
+            background-color: #f4f4f4;
+        }
+
+        .tools-container button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+
+        .tools-container button:hover {
+            background-color: #45a049;
+        }
+
+        .tools-container h3 {
+            font-size: 1.8em;
+            color: #333;
+        }
+
+        .file-info {
+            margin-top: 15px;
+            font-size: 18px;
+            color: #555;
         }
         
-        .ads-container {
-            margin: 20px 0;
+        /* Modal and overlay styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-content h2 {
+            color: #333;
+        }
+
+        .modal-content button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal-content button:hover {
+            background-color: #45a049;
         }
     </style>
 
@@ -152,7 +204,7 @@
                  data-ad-slot="XXXXXXX" <!-- Replace with your specific ad slot ID -->
                  data-ad-format="auto"></ins>
             <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
+                (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
         </div>
 
