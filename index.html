@@ -3,444 +3,1246 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Tools</title>
+    <meta name="description" content="Discover a wide range of local services in Comilla. From hospitals to hotels, transportation to tourist centers, we've got you covered.">
+    <meta name="keywords" content="Comilla services, hospitals, doctors, hotels, buses, trains, electric engineers, mechanics, private cars, tourist centers, house rentals, ambulances, police, consumer rights">
+    <meta name="author" content="Md Ismail Majumdar">
+    <title>Comilla Service - Local Services in Comilla</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* General body and layout styling */
+        /* General Styles */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
-            background-color: #f0f2f5;
-            transition: background-color 0.3s ease;
-            color: #333;
+            padding: 0;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
         }
 
-        .dark-mode {
-            background-color: #2e2e2e;
-            color: #ddd;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 30px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        header {
             text-align: center;
-        }
-
-        .theme-toggle {
-            padding: 12px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            margin: 10px;
-            font-size: 16px;
-        }
-
-        .theme-toggle:hover {
-            background-color: #45a049;
-        }
-
-        h1 {
-            color: #4CAF50;
-            font-size: 2.5em;
-        }
-
-        .ads-container {
-            margin-top: 30px;
-        }
-
-        /* Google Ads Styling */
-        ins.adsbygoogle {
-            display: block;
-            margin-top: 30px;
-            max-width: 100%;
-            background: #f4f4f4;
-            padding: 20px 0;
-        }
-
-        /* Image preview styles */
-        img {
-            max-width: 100%;
-            margin-top: 20px;
-            border-radius: 8px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 5px;
-            background-color: #e1e1e1;
-            margin-top: 20px;
-            border-radius: 3px;
+            padding: 60px 20px;
+            position: relative;
             overflow: hidden;
-            display: none;
         }
 
-        .progress-bar span {
-            display: block;
-            height: 100%;
-            background-color: #4CAF50;
-            width: 0;
-            transition: width 0.3s ease;
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 159, 67, 0.2), transparent 70%);
+            animation: float 6s infinite linear;
+            z-index: -1;
         }
 
-        #downloadBtn {
-            padding: 12px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            display: none;
-            font-size: 16px;
-            margin-top: 20px;
+        @keyframes float {
+            0% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(50%, 50%);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
         }
 
-        #downloadBtn:hover {
-            background-color: #45a049;
+        header h1 {
+            margin: 0;
+            font-size: 3rem;
+            color: #ff9f43;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
-        .tools-container {
-            margin-top: 30px;
-            text-align: left;
+        header p {
+            margin: 10px 0 0;
+            font-size: 1.2rem;
+            color: #f0f0f0;
         }
 
-        .tools-container div {
-            margin: 25px 0;
+        main {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
         }
 
-        .tools-container input, .tools-container button {
-            padding: 12px;
-            font-size: 16px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            width: 100%;
-            max-width: 300px;
-            background-color: #f4f4f4;
+        /* Service Cards */
+        .service-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            width: calc(33.333% - 40px);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .tools-container button {
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-            border: none;
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 159, 67, 0.3), transparent 70%);
+            animation: float 8s infinite linear;
+            z-index: -1;
         }
 
-        .tools-container button:hover {
-            background-color: #45a049;
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
         }
 
-        .tools-container h3 {
-            font-size: 1.8em;
-            color: #333;
+        .service-card i {
+            font-size: 3rem;
+            color: #ff9f43;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
         }
 
-        .file-info {
+        .service-card:hover i {
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        .service-card h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .service-card p {
+            margin: 10px 0 0;
+            font-size: 1rem;
+            color: #f0f0f0;
+        }
+
+        .service-card a {
+            display: inline-block;
             margin-top: 15px;
-            font-size: 18px;
-            color: #555;
+            padding: 6px 12px;
+            background: #ff9f43;
+            color: #fff;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: background 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            font-size: 0.8rem;
         }
-        
-        /* Modal and overlay styling */
+
+        .service-card a:hover {
+            background: #ff7f00;
+            transform: translateY(-3px);
+        }
+
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
+            z-index: 1;
             left: 0;
+            top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
+            background-color: rgba(0, 0, 0, 0.4);
+            overflow: auto;
         }
 
         .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
             max-width: 500px;
-            width: 90%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .modal-content h2 {
+            border-radius: 10px;
             color: #333;
+            text-align: center;
         }
 
-        .modal-content button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff9f43;
+        }
+
+        .saved-info-list {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .saved-info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .saved-info-item button {
+            background: #ff9f43;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
             border-radius: 5px;
             cursor: pointer;
         }
 
-        .modal-content button:hover {
-            background-color: #45a049;
+        .saved-info-item button:hover {
+            background: #ff7f00;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            margin: 20px;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        footer p {
+            margin: 0;
+            color: #f0f0f0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .service-card {
+                width: calc(50% - 40px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .service-card {
+                width: 100%;
+            }
         }
     </style>
-
-    <!-- Google Ads Script -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
 <body>
+    <header>
+        <h1>Comilla Service</h1>
+        <p>Your one-stop destination for local services in Comilla. From hospitals to hotels, transportation to tourist centers, we've got you covered.</p>
+    </header>
 
-    <div class="container">
-        <h1>Image Tools</h1>
+    <main>
+        <!-- Service Cards will be dynamically generated here -->
+    </main>
 
-        <!-- Theme Toggle Button -->
-        <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
-
-        <!-- Google AdSense Ad Unit -->
-        <div class="ads-container">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="pub-1001658435223422" <!-- Your AdSense client ID -->
-                 data-ad-slot="XXXXXXX" <!-- Replace with your specific ad slot ID -->
-                 data-ad-format="auto"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-
-        <!-- Image Compression Tool -->
-        <input type="file" id="fileInput" accept="image/*">
-        <button id="compressBtn">Compress Image</button>
-
-        <div class="progress-bar" id="progressBar"><span></span></div>
-
-        <div id="imagePreview">
-            <h3>Original Image:</h3>
-            <img id="originalImage" src="" alt="Your image will appear here" />
-        </div>
-
-        <div id="compressedPreview">
-            <h3>Compressed Image:</h3>
-            <img id="compressedImage" src="" alt="Compressed image will appear here" />
-        </div>
-
-        <div class="file-info">
-            <p>Original size: <span id="originalSize">0 KB</span></p>
-            <p>Compressed size: <span id="compressedSize">0 KB</span></p>
-        </div>
-
-        <button id="downloadBtn">Download Compressed Image</button>
-
-        <!-- Tools Section -->
-        <div class="tools-container">
-            <h2>Additional Image Tools</h2>
-            <!-- Resizer Tool -->
-            <div>
-                <h3>Resize Image</h3>
-                <input type="number" id="resizeWidth" placeholder="Width (px)">
-                <input type="number" id="resizeHeight" placeholder="Height (px)">
-                <button onclick="resizeImage()">Resize Image</button>
-                <div id="resizedPreview">
-                    <h3>Resized Image:</h3>
-                    <img id="resizedImage" src="" alt="Resized image will appear here" />
-                </div>
-            </div>
-
-            <!-- Converter Tool -->
-            <div>
-                <h3>Convert Image Format</h3>
-                <button onclick="convertImage()">Convert to PNG</button>
-                <div id="convertedPreview">
-                    <h3>Converted Image:</h3>
-                    <img id="convertedImage" src="" alt="Converted image will appear here" />
-                </div>
-            </div>
-
-            <!-- Cropper Tool -->
-            <div>
-                <h3>Crop Image</h3>
-                <input type="number" id="cropX" placeholder="X Coordinate">
-                <input type="number" id="cropY" placeholder="Y Coordinate">
-                <input type="number" id="cropWidth" placeholder="Width">
-                <input type="number" id="cropHeight" placeholder="Height">
-                <button onclick="cropImage()">Crop Image</button>
-                <div id="croppedPreview">
-                    <h3>Cropped Image:</h3>
-                    <img id="croppedImage" src="" alt="Cropped image will appear here" />
-                </div>
-            </div>
-
-            <!-- Filter Tool -->
-            <div>
-                <h3>Apply Filter to Image</h3>
-                <button onclick="applyFilter('grayscale')">Grayscale</button>
-                <button onclick="applyFilter('sepia')">Sepia</button>
-                <button onclick="applyFilter('brightness')">Brightness</button>
-                <div id="filteredPreview">
-                    <h3>Filtered Image:</h3>
-                    <img id="filteredImage" src="" alt="Filtered image will appear here" />
-                </div>
-            </div>
+    <!-- Modal for Viewing Details -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="detailsTitle">Details</h2>
+            <pre id="detailsContent"></pre>
         </div>
     </div>
 
-    <!-- Image compression library -->
-    <script src="https://cdn.jsdelivr.net/npm/compressorjs/dist/compressor.min.js"></script>
+    <!-- Modal for Entering Information -->
+    <div id="enterInfoModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="enterInfoTitle">Provide Your Information</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 20px;">সঠিক তথ্য দিয়ে পাশে থাকুন</p>
+            <form id="infoForm">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="number">Number:</label>
+                    <input type="text" id="number" placeholder="Enter your number" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" placeholder="Enter your address" required>
+                </div>
+                <button type="submit" class="circular-button">Save</button>
+            </form>
+            <div class="saved-info-list" id="savedInfoList"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Comilla Service. All rights reserved.</p>
+    </footer>
 
     <script>
-        let selectedImage = null;
-        let compressedImageURL = null;
+        // Default information for each category (15 entries per category)
+        const defaultData = {
+            hospitals: `Comilla Medical College Hospital
+0123456789
+Main Road, Comilla
 
-        // Toggle dark/light mode
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-        }
+Comilla General Hospital
+9876543210
+Station Road, Comilla
 
-        // Handle file selection
-        document.getElementById("fileInput").addEventListener("change", handleFileSelect);
-        document.getElementById("compressBtn").addEventListener("click", compressImage);
+City Hospital
+0112233445
+Kandirpar, Comilla
 
-        function handleFileSelect(event) {
-            const file = event.target.files[0];
-            if (file && file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const imgElement = document.getElementById("originalImage");
-                    imgElement.src = e.target.result;
-                    selectedImage = file;
+Al-Amin Hospital
+0198765432
+Kotbari, Comilla
 
-                    // Display original size
-                    const sizeInKB = (file.size / 1024).toFixed(2);
-                    document.getElementById("originalSize").textContent = sizeInKB + " KB";
-                };
-                reader.readAsDataURL(file);
-            } else {
-                alert("Please select an image file.");
-            }
-        }
+Popular Diagnostic Center
+0171122334
+Dhaka Road, Comilla
 
-        // Compress the image
-        function compressImage() {
-            if (!selectedImage) {
-                alert("Please select an image first.");
-                return;
-            }
+Comilla Sadar Hospital
+0187654321
+Sadar Road, Comilla
 
-            document.getElementById("progressBar").style.display = "block";
+Islami Bank Hospital
+0167890123
+Kandirpar, Comilla
 
-            new Compressor(selectedImage, {
-                quality: 0.6, 
-                success(result) {
-                    document.getElementById("progressBar").querySelector('span').style.width = '100%';
-                    compressedImageURL = URL.createObjectURL(result);
-                    const compressedImageElement = document.getElementById("compressedImage");
-                    compressedImageElement.src = compressedImageURL;
+Comilla Children's Hospital
+0156789012
+Hospital Road, Comilla
 
-                    const sizeInKB = (result.size / 1024).toFixed(2);
-                    document.getElementById("compressedSize").textContent = sizeInKB + " KB";
+Comilla Orthopedic Hospital
+0145678901
+Kotbari, Comilla
 
-                    document.getElementById("downloadBtn").style.display = "inline-block";
-                    document.getElementById("downloadBtn").onclick = function () {
-                        const a = document.createElement('a');
-                        a.href = compressedImageURL;
-                        a.download = "compressed_image.jpg";
-                        a.click();
-                    };
-                },
-                error(err) {
-                    console.error("Compression error:", err);
-                    document.getElementById("progressBar").style.display = "none";
-                }
+Comilla Eye Hospital
+0134567890
+Station Road, Comilla
+
+Comilla Dental Hospital
+0123456780
+Dhaka Road, Comilla
+
+Comilla Heart Hospital
+0112345678
+Main Road, Comilla
+
+Comilla Cancer Hospital
+0198765430
+Kotbari, Comilla
+
+Comilla Kidney Hospital
+0187654320
+Sadar Road, Comilla
+
+Comilla Women's Hospital
+0176543210
+Hospital Road, Comilla`,
+            doctors: `Dr. Rahman (Cardiologist)
+0123456789
+Main Road, Comilla
+
+Dr. Akhtar (Pediatrician)
+9876543210
+Station Road, Comilla
+
+Dr. Hasan (Orthopedic)
+0112233445
+Kandirpar, Comilla
+
+Dr. Fatima (Gynecologist)
+0198765432
+Kotbari, Comilla
+
+Dr. Ali (Dermatologist)
+0171122334
+Dhaka Road, Comilla
+
+Dr. Khan (Neurologist)
+0187654321
+Sadar Road, Comilla
+
+Dr. Ahmed (ENT Specialist)
+0167890123
+Kandirpar, Comilla
+
+Dr. Islam (Psychiatrist)
+0156789012
+Hospital Road, Comilla
+
+Dr. Kabir (Urologist)
+0145678901
+Kotbari, Comilla
+
+Dr. Rahim (Oncologist)
+0134567890
+Station Road, Comilla
+
+Dr. Karim (Dentist)
+0123456780
+Dhaka Road, Comilla
+
+Dr. Naser (Endocrinologist)
+0112345678
+Main Road, Comilla
+
+Dr. Sultana (Pediatric Surgeon)
+0198765430
+Kotbari, Comilla
+
+Dr. Hossain (Rheumatologist)
+0187654320
+Sadar Road, Comilla
+
+Dr. Begum (Anesthesiologist)
+0176543210
+Hospital Road, Comilla`,
+            hotels: `Hotel Royal Palace
+0123456789
+Main Road, Comilla
+
+Hotel Golden Tulip
+9876543210
+Station Road, Comilla
+
+Hotel Star Palace
+0112233445
+Kandirpar, Comilla
+
+Hotel Grand Park
+0198765432
+Kotbari, Comilla
+
+Hotel City Inn
+0171122334
+Dhaka Road, Comilla
+
+Hotel Sky View
+0187654321
+Sadar Road, Comilla
+
+Hotel Blue Moon
+0167890123
+Kandirpar, Comilla
+
+Hotel Green Valley
+0156789012
+Hospital Road, Comilla
+
+Hotel Silver Star
+0145678901
+Kotbari, Comilla
+
+Hotel Ocean Pearl
+0134567890
+Station Road, Comilla
+
+Hotel Dreamland
+0123456780
+Dhaka Road, Comilla
+
+Hotel Paradise
+0112345678
+Main Road, Comilla
+
+Hotel Sunflower
+0198765430
+Kotbari, Comilla
+
+Hotel Moonlight
+0187654320
+Sadar Road, Comilla
+
+Hotel Riverside
+0176543210
+Hospital Road, Comilla`,
+            buses: `Comilla-Dhaka Route
+0123456789
+Main Road, Comilla
+
+Comilla-Chittagong Route
+9876543210
+Station Road, Comilla
+
+Comilla-Sylhet Route
+0112233445
+Kandirpar, Comilla
+
+Comilla-Khulna Route
+0198765432
+Kotbari, Comilla
+
+Comilla-Rajshahi Route
+0171122334
+Dhaka Road, Comilla
+
+Comilla-Barishal Route
+0187654321
+Sadar Road, Comilla
+
+Comilla-Rangpur Route
+0167890123
+Kandirpar, Comilla
+
+Comilla-Mymensingh Route
+0156789012
+Hospital Road, Comilla
+
+Comilla-Jessore Route
+0145678901
+Kotbari, Comilla
+
+Comilla-Pabna Route
+0134567890
+Station Road, Comilla
+
+Comilla-Bogra Route
+0123456780
+Dhaka Road, Comilla
+
+Comilla-Kushtia Route
+0112345678
+Main Road, Comilla
+
+Comilla-Dinajpur Route
+0198765430
+Kotbari, Comilla
+
+Comilla-Natore Route
+0187654320
+Sadar Road, Comilla
+
+Comilla-Faridpur Route
+0176543210
+Hospital Road, Comilla`,
+            trains: `Comilla Railway Station
+0123456789
+Main Road, Comilla
+
+Dhaka-Comilla Train
+9876543210
+Station Road, Comilla
+
+Chittagong-Comilla Train
+0112233445
+Kandirpar, Comilla
+
+Sylhet-Comilla Train
+0198765432
+Kotbari, Comilla
+
+Khulna-Comilla Train
+0171122334
+Dhaka Road, Comilla
+
+Rajshahi-Comilla Train
+0187654321
+Sadar Road, Comilla
+
+Barishal-Comilla Train
+0167890123
+Kandirpar, Comilla
+
+Rangpur-Comilla Train
+0156789012
+Hospital Road, Comilla
+
+Mymensingh-Comilla Train
+0145678901
+Kotbari, Comilla
+
+Jessore-Comilla Train
+0134567890
+Station Road, Comilla
+
+Pabna-Comilla Train
+0123456780
+Dhaka Road, Comilla
+
+Bogra-Comilla Train
+0112345678
+Main Road, Comilla
+
+Kushtia-Comilla Train
+0198765430
+Kotbari, Comilla
+
+Dinajpur-Comilla Train
+0187654320
+Sadar Road, Comilla
+
+Natore-Comilla Train
+0176543210
+Hospital Road, Comilla`,
+            electricEngineers: `Mr. Ali (Certified Electrician)
+0123456789
+Main Road, Comilla
+
+Mr. Hasan (Electrical Engineer)
+9876543210
+Station Road, Comilla
+
+Mr. Rahman (Electrician)
+0112233445
+Kandirpar, Comilla
+
+Mr. Kabir (Electrical Engineer)
+0198765432
+Kotbari, Comilla
+
+Mr. Karim (Electrician)
+0171122334
+Dhaka Road, Comilla
+
+Mr. Ahmed (Electrical Engineer)
+0187654321
+Sadar Road, Comilla
+
+Mr. Islam (Electrician)
+0167890123
+Kandirpar, Comilla
+
+Mr. Hossain (Electrical Engineer)
+0156789012
+Hospital Road, Comilla
+
+Mr. Naser (Electrician)
+0145678901
+Kotbari, Comilla
+
+Mr. Rahim (Electrical Engineer)
+0134567890
+Station Road, Comilla
+
+Mr. Sultana (Electrician)
+0123456780
+Dhaka Road, Comilla
+
+Mr. Begum (Electrical Engineer)
+0112345678
+Main Road, Comilla
+
+Mr. Khan (Electrician)
+0198765430
+Kotbari, Comilla
+
+Mr. Akhtar (Electrical Engineer)
+0187654320
+Sadar Road, Comilla
+
+Mr. Fatima (Electrician)
+0176543210
+Hospital Road, Comilla`,
+            mechanics: `Auto Repair Shop
+0123456789
+Main Road, Comilla
+
+Car Care Center
+9876543210
+Station Road, Comilla
+
+Bike Repair Shop
+0112233445
+Kandirpar, Comilla
+
+Truck Repair Shop
+0198765432
+Kotbari, Comilla
+
+Engine Repair Shop
+0171122334
+Dhaka Road, Comilla
+
+Tire Repair Shop
+0187654321
+Sadar Road, Comilla
+
+Brake Repair Shop
+0167890123
+Kandirpar, Comilla
+
+Suspension Repair Shop
+0156789012
+Hospital Road, Comilla
+
+Transmission Repair Shop
+0145678901
+Kotbari, Comilla
+
+Electrical Repair Shop
+0134567890
+Station Road, Comilla
+
+AC Repair Shop
+0123456780
+Dhaka Road, Comilla
+
+Battery Repair Shop
+0112345678
+Main Road, Comilla
+
+Paint Repair Shop
+0198765430
+Kotbari, Comilla
+
+Glass Repair Shop
+0187654320
+Sadar Road, Comilla
+
+Exhaust Repair Shop
+0176543210
+Hospital Road, Comilla`,
+            privateCars: `Rent a Car Service
+0123456789
+Main Road, Comilla
+
+Private Car Rentals
+9876543210
+Station Road, Comilla
+
+Luxury Car Rentals
+0112233445
+Kandirpar, Comilla
+
+SUV Rentals
+0198765432
+Kotbari, Comilla
+
+Sedan Rentals
+0171122334
+Dhaka Road, Comilla
+
+Microbus Rentals
+0187654321
+Sadar Road, Comilla
+
+Pickup Rentals
+0167890123
+Kandirpar, Comilla
+
+Van Rentals
+0156789012
+Hospital Road, Comilla
+
+Jeep Rentals
+0145678901
+Kotbari, Comilla
+
+Hatchback Rentals
+0134567890
+Station Road, Comilla
+
+Coupe Rentals
+0123456780
+Dhaka Road, Comilla
+
+Convertible Rentals
+0112345678
+Main Road, Comilla
+
+Hybrid Rentals
+0198765430
+Kotbari, Comilla
+
+Electric Car Rentals
+0187654320
+Sadar Road, Comilla
+
+Vintage Car Rentals
+0176543210
+Hospital Road, Comilla`,
+            touristCenters: `Shalban Vihara
+0123456789
+Main Road, Comilla
+
+Mainamati Museum
+9876543210
+Station Road, Comilla
+
+Comilla Zoo
+0112233445
+Kandirpar, Comilla
+
+Comilla Park
+0198765432
+Kotbari, Comilla
+
+Comilla Lake
+0171122334
+Dhaka Road, Comilla
+
+Comilla Hill
+0187654321
+Sadar Road, Comilla
+
+Comilla River
+0167890123
+Kandirpar, Comilla
+
+Comilla Forest
+0156789012
+Hospital Road, Comilla
+
+Comilla Temple
+0145678901
+Kotbari, Comilla
+
+Comilla Mosque
+0134567890
+Station Road, Comilla
+
+Comilla Church
+0123456780
+Dhaka Road, Comilla
+
+Comilla Pagoda
+0112345678
+Main Road, Comilla
+
+Comilla Garden
+0198765430
+Kotbari, Comilla
+
+Comilla Tower
+0187654320
+Sadar Road, Comilla
+
+Comilla Bridge
+0176543210
+Hospital Road, Comilla`,
+            houseRentals: `Apartment Rentals
+0123456789
+Main Road, Comilla
+
+House Rentals
+9876543210
+Station Road, Comilla
+
+Villa Rentals
+0112233445
+Kandirpar, Comilla
+
+Studio Rentals
+0198765432
+Kotbari, Comilla
+
+Flat Rentals
+0171122334
+Dhaka Road, Comilla
+
+Bungalow Rentals
+0187654321
+Sadar Road, Comilla
+
+Cottage Rentals
+0167890123
+Kandirpar, Comilla
+
+Duplex Rentals
+0156789012
+Hospital Road, Comilla
+
+Penthouse Rentals
+0145678901
+Kotbari, Comilla
+
+Condo Rentals
+0134567890
+Station Road, Comilla
+
+Townhouse Rentals
+0123456780
+Dhaka Road, Comilla
+
+Loft Rentals
+0112345678
+Main Road, Comilla
+
+Mansion Rentals
+0198765430
+Kotbari, Comilla
+
+Farmhouse Rentals
+0187654320
+Sadar Road, Comilla
+
+Cabin Rentals
+0176543210
+Hospital Road, Comilla`,
+            ambulances: `Emergency Ambulance Service
+0123456789
+Main Road, Comilla
+
+Comilla Ambulance Network
+9876543210
+Station Road, Comilla
+
+City Ambulance Service
+0112233445
+Kandirpar, Comilla
+
+Red Crescent Ambulance
+0198765432
+Kotbari, Comilla
+
+Green Ambulance Service
+0171122334
+Dhaka Road, Comilla
+
+Blue Ambulance Service
+0187654321
+Sadar Road, Comilla
+
+Yellow Ambulance Service
+0167890123
+Kandirpar, Comilla
+
+White Ambulance Service
+0156789012
+Hospital Road, Comilla
+
+Black Ambulance Service
+0145678901
+Kotbari, Comilla
+
+Silver Ambulance Service
+0134567890
+Station Road, Comilla
+
+Gold Ambulance Service
+0123456780
+Dhaka Road, Comilla
+
+Platinum Ambulance Service
+0112345678
+Main Road, Comilla
+
+Diamond Ambulance Service
+0198765430
+Kotbari, Comilla
+
+Ruby Ambulance Service
+0187654320
+Sadar Road, Comilla
+
+Sapphire Ambulance Service
+0176543210
+Hospital Road, Comilla`,
+            police: `Comilla Police Station
+0123456789
+Main Road, Comilla
+
+Kotwali Police Station
+9876543210
+Station Road, Comilla
+
+Sadar Police Station
+0112233445
+Kandirpar, Comilla
+
+Kotbari Police Station
+0198765432
+Kotbari, Comilla
+
+Dhaka Road Police Station
+0171122334
+Dhaka Road, Comilla
+
+Hospital Road Police Station
+0187654321
+Sadar Road, Comilla
+
+Kandirpar Police Station
+0167890123
+Kandirpar, Comilla
+
+Comilla Railway Police Station
+0156789012
+Hospital Road, Comilla
+
+Comilla Traffic Police
+0145678901
+Kotbari, Comilla
+
+Comilla Women Police Station
+0134567890
+Station Road, Comilla
+
+Comilla Tourist Police
+0123456780
+Dhaka Road, Comilla
+
+Comilla River Police
+0112345678
+Main Road, Comilla
+
+Comilla Forest Police
+0198765430
+Kotbari, Comilla
+
+Comilla Bridge Police
+0187654320
+Sadar Road, Comilla
+
+Comilla Airport Police
+0176543210
+Hospital Road, Comilla`,
+            consumerRights: `Consumer Rights Office
+0123456789
+Main Road, Comilla
+
+Consumer Court
+9876543210
+Station Road, Comilla
+
+Consumer Helpline
+0112233445
+Kandirpar, Comilla
+
+Consumer Protection Agency
+0198765432
+Kotbari, Comilla
+
+Consumer Rights NGO
+0171122334
+Dhaka Road, Comilla
+
+Consumer Rights Legal Aid
+0187654321
+Sadar Road, Comilla
+
+Consumer Rights Advocacy
+0167890123
+Kandirpar, Comilla
+
+Consumer Rights Hotline
+0156789012
+Hospital Road, Comilla
+
+Consumer Rights Commission
+0145678901
+Kotbari, Comilla
+
+Consumer Rights Support
+0134567890
+Station Road, Comilla
+
+Consumer Rights Awareness
+0123456780
+Dhaka Road, Comilla
+
+Consumer Rights Forum
+0112345678
+Main Road, Comilla
+
+Consumer Rights Association
+0198765430
+Kotbari, Comilla
+
+Consumer Rights Network
+0187654320
+Sadar Road, Comilla
+
+Consumer Rights Foundation
+0176543210
+Hospital Road, Comilla`
+        };
+
+        // Generate service cards dynamically
+        const services = [{ id: "hospitals", icon: "fa-hospital", name: "Hospitals" },
+            { id: "doctors", icon: "fa-user-md", name: "Doctors" },
+            { id: "hotels", icon: "fa-hotel", name: "Hotels" },
+            { id: "buses", icon: "fa-bus", name: "Buses" },
+            { id: "trains", icon: "fa-train", name: "Trains" },
+            { id: "electricEngineers", icon: "fa-bolt", name: "Electric Engineers" },
+            { id: "mechanics", icon: "fa-tools", name: "Mechanics" },
+            { id: "privateCars", icon: "fa-car", name: "Private Cars" },{ id: "touristCenters", icon: "fa-map-marked-alt", name: "Tourist Centers" },
+            { id: "houseRentals", icon: "fa-home", name: "House Rentals" },
+            { id: "ambulances", icon: "fa-ambulance", name: "Ambulances" },
+            { id: "police", icon: "fa-shield-alt", name: "Police" },
+            { id: "consumerRights", icon: "fa-balance-scale", name: "Consumer Rights" }
+        ];
+
+        const main = document.querySelector("main");
+        services.forEach(service => {const card = document.createElement("div");
+            card.className = "service-card";
+            card.innerHTML = `
+                <i class="fas ${service.icon}"></i>
+                <h2>${service.name}</h2>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <a href="#" class="viewDetailsBtn" data-id="${service.id}">Show Default Info</a>
+                    <a href="#" class="googleSearchBtn" data-id="${service.id}">Google Search</a> <a href="#" class="enterInfoBtn" data-id="${service.id}">Provide Your Information</a>
+                </div>
+            `;
+            main.appendChild(card);
+        });
+
+        // Modal for Viewing Details
+        const detailsModal = document.getElementById("detailsModal");
+        const detailsTitle = document.getElementById("detailsTitle");// Modal for Entering Information
+        const enterInfoModal = document.getElementById("enterInfoModal");
+        const enterInfoTitle = document.getElementById("enterInfoTitle");
+        const infoForm = document.getElementById("infoForm");
+        const savedInfoList = document.getElementById("savedInfoList");
+
+        // Close buttons
+        const closeBtns = document.querySelectorAll(".close");
+
+        let currentServiceId = null;let savedInfo = {}; // Object to store saved information for each service
+
+        // Open modal for viewing details
+        document.querySelectorAll(".viewDetailsBtn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                currentServiceId = btn.getAttribute("data-id");
+                detailsTitle.textContent = `${btn.parentElement.parentElement.querySelector("h2").textContent} Details`;
+                detailsContent.textContent = defaultData[currentServiceId];detailsModal.style.display = "block";
             });
-        }
+        });
 
-        // Resize the image
-        function resizeImage() {
-            const width = document.getElementById("resizeWidth").value;
-            const height = document.getElementById("resizeHeight").value;
+        // Open Google Search in a new tab
+        document.querySelectorAll(".googleSearchBtn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                const serviceName = btn.parentElement.parentElement.querySelector("h2").textContent;const query = `${serviceName} in Comilla`;
+                const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                window.open(url, "_blank");
+            });
+        });
 
-            if (!width || !height) {
-                alert("Please enter both width and height.");
+        // Open Enter Information modal
+        document.querySelectorAll(".enterInfoBtn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();currentServiceId = btn.getAttribute("data-id");
+                enterInfoTitle.textContent = `Provide Your Information - ${btn.parentElement.parentElement.querySelector("h2").textContent}`;
+                infoForm.reset(); // Reset the form
+                renderSavedInfo(); // Render saved information
+                enterInfoModal.style.display = "block";
+            });
+        });
+
+        // Save information
+        infoForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const name = document.getElementById("name").value;const number = document.getElementById("number").value;
+            const address = document.getElementById("address").value;
+
+            if (!name || !number || !address) {
+                alert("Please fill out all fields.");
                 return;
             }
 
-            const img = document.getElementById("originalImage");
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
-
-            canvas.width = width;
-            canvas.height = height;
-            ctx.drawImage(img, 0, 0, width, height);
-
-            const resizedImageURL = canvas.toDataURL();
-            document.getElementById("resizedImage").src = resizedImageURL;
-        }
-
-        // Convert the image to PNG format
-        function convertImage() {
-            const img = document.getElementById("originalImage");
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
-
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0, img.width, img.height);
-
-            const convertedImageURL = canvas.toDataURL("image/png");
-            document.getElementById("convertedImage").src = convertedImageURL;
-        }
-
-        // Crop the image
-        function cropImage() {
-            const x = document.getElementById("cropX").value;
-            const y = document.getElementById("cropY").value;
-            const width = document.getElementById("cropWidth").value;
-            const height = document.getElementById("cropHeight").value;
-
-            if (!x || !y || !width || !height) {
-                alert("Please enter all crop values.");
-                return;
+            // Save the information
+            if (!savedInfo[currentServiceId]) {
+                savedInfo[currentServiceId] = [];
             }
+            savedInfo[currentServiceId].push({ name, number, address });
 
-            const img = document.getElementById("originalImage");
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
+            // Render the updated list
+            renderSavedInfo();
 
-            canvas.width = width;
-            canvas.height = height;
-            ctx.drawImage(img, x, y, width, height, 0, 0, width, height);
+            // Reset the form
+            infoForm.reset();
+        });
 
-            const croppedImageURL = canvas.toDataURL();
-            document.getElementById("croppedImage").src = croppedImageURL;
-        }
-
-        // Apply filters to the image
-        function applyFilter(filterType) {
-            const img = document.getElementById("originalImage");
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
-
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0, img.width, img.height);
-
-            switch (filterType) {
-                case "grayscale":
-                    ctx.filter = "grayscale(100%)";
-                    break;
-                case "sepia":
-                    ctx.filter = "sepia(100%)";
-                    break;
-                case "brightness":
-                    ctx.filter = "brightness(1.5)";
-                    break;
+        // Render saved information
+        function renderSavedInfo() {
+            savedInfoList.innerHTML = "";
+            if (savedInfo[currentServiceId]) {
+                savedInfo[currentServiceId].forEach((info, index) => {
+                    const item = document.createElement("div");
+                    item.className = "saved-info-item";
+                    item.innerHTML = `
+                        <div>
+                            <strong>Name:</strong> ${info.name}<br>
+                            <strong>Number:</strong> ${info.number}<br>
+                            <strong>Address:</strong> ${info.address}</div>
+                        <div>
+                            <button onclick="editInfo(${index})">Edit</button>
+                            <button onclick="deleteInfo(${index})">Delete</button>
+                        </div>
+                    `;
+                    savedInfoList.appendChild(item);
+                });
             }
-
-            ctx.drawImage(img, 0, 0);
-            const filteredImageURL = canvas.toDataURL();
-            document.getElementById("filteredImage").src = filteredImageURL;
         }
+
+        // Edit information
+        window.editInfo = function (index) {const info = savedInfo[currentServiceId][index];
+            document.getElementById("name").value = info.name;
+            document.getElementById("number").value = info.number;
+            document.getElementById("address").value = info.address;
+
+            // Remove the old entry
+            savedInfo[currentServiceId].splice(index, 1);
+
+            // Render the updated list
+            renderSavedInfo();
+        };
+        
+        // Delete information
+        window.deleteInfo = function (index) {
+            savedInfo[currentServiceId].splice(index, 1);
+            renderSavedInfo();
+        };
+
+        // Close modals
+        closeBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                detailsModal.style.display = "none";
+                enterInfoModal.style.display = "none";
+            });
+        });
+        
+        window.onclick = (event) => {
+            if (event.target == detailsModal || event.target == enterInfoModal) {
+                detailsModal.style.display = "none";
+                enterInfoModal.style.display = "none";
+            }
+        };
     </script>
-
 </body>
 </html>
