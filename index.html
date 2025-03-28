@@ -8,6 +8,9 @@
     <meta name="author" content="Md Ismail Majumdar">
     <title>Comilla Service - Local Services in Comilla</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <style>
         /* General Styles */
         body {
@@ -270,22 +273,6 @@
             }
         }
     </style>
-    <script>
-        // Firebase
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            databaseURL: "YOUR_DATABASE_URL",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-        
-        // Firebase ইনিশিয়ালাইজ করুন
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-    </script>
 </head>
 <body>
     <header>
@@ -336,6 +323,21 @@
     </footer>
 
     <script>
+        // Firebase Configuration - Replace with your actual Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyABC123XYZ456DEF789GHI",
+            authDomain: "comilla-service.firebaseapp.com",
+            databaseURL: "https://comilla-service.firebaseio.com",
+            projectId: "comilla-service",
+            storageBucket: "comilla-service.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abcdef1234567890"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
         // Default information for each category (15 entries per category)
         const defaultData = {
             hospitals: `Comilla Medical College Hospital
@@ -1108,14 +1110,16 @@ Hospital Road, Comilla`
         };
 
         // Generate service cards dynamically
-        const services = [{ id: "hospitals", icon: "fa-hospital", name: "Hospitals" },
+        const services = [
+            { id: "hospitals", icon: "fa-hospital", name: "Hospitals" },
             { id: "doctors", icon: "fa-user-md", name: "Doctors" },
             { id: "hotels", icon: "fa-hotel", name: "Hotels" },
             { id: "buses", icon: "fa-bus", name: "Buses" },
             { id: "trains", icon: "fa-train", name: "Trains" },
             { id: "electricEngineers", icon: "fa-bolt", name: "Electric Engineers" },
             { id: "mechanics", icon: "fa-tools", name: "Mechanics" },
-            { id: "privateCars", icon: "fa-car", name: "Private Cars" },{ id: "touristCenters", icon: "fa-map-marked-alt", name: "Tourist Centers" },
+            { id: "privateCars", icon: "fa-car", name: "Private Cars" },
+            { id: "touristCenters", icon: "fa-map-marked-alt", name: "Tourist Centers" },
             { id: "houseRentals", icon: "fa-home", name: "House Rentals" },
             { id: "ambulances", icon: "fa-ambulance", name: "Ambulances" },
             { id: "police", icon: "fa-shield-alt", name: "Police" },
@@ -1123,14 +1127,16 @@ Hospital Road, Comilla`
         ];
 
         const main = document.querySelector("main");
-        services.forEach(service => {const card = document.createElement("div");
+        services.forEach(service => {
+            const card = document.createElement("div");
             card.className = "service-card";
             card.innerHTML = `
                 <i class="fas ${service.icon}"></i>
                 <h2>${service.name}</h2>
                 <div style="display: flex; gap: 10px; justify-content: center;">
                     <a href="#" class="viewDetailsBtn" data-id="${service.id}">Show Default Info</a>
-                    <a href="#" class="googleSearchBtn" data-id="${service.id}">Google Search</a> <a href="#" class="enterInfoBtn" data-id="${service.id}">Provide Your Information</a>
+                    <a href="#" class="googleSearchBtn" data-id="${service.id}">Google Search</a>
+                    <a href="#" class="enterInfoBtn" data-id="${service.id}">Provide Your Information</a>
                 </div>
             `;
             main.appendChild(card);
@@ -1138,7 +1144,10 @@ Hospital Road, Comilla`
 
         // Modal for Viewing Details
         const detailsModal = document.getElementById("detailsModal");
-        const detailsTitle = document.getElementById("detailsTitle");// Modal for Entering Information
+        const detailsTitle = document.getElementById("detailsTitle");
+        const detailsContent = document.getElementById("detailsContent");
+
+        // Modal for Entering Information
         const enterInfoModal = document.getElementById("enterInfoModal");
         const enterInfoTitle = document.getElementById("enterInfoTitle");
         const infoForm = document.getElementById("infoForm");
@@ -1147,7 +1156,8 @@ Hospital Road, Comilla`
         // Close buttons
         const closeBtns = document.querySelectorAll(".close");
 
-        let currentServiceId = null;let savedInfo = {}; // Object to store saved information for each service
+        let currentServiceId = null;
+        let currentEditingIndex = null;
 
         // Open modal for viewing details
         document.querySelectorAll(".viewDetailsBtn").forEach(btn => {
@@ -1155,7 +1165,8 @@ Hospital Road, Comilla`
                 e.preventDefault();
                 currentServiceId = btn.getAttribute("data-id");
                 detailsTitle.textContent = `${btn.parentElement.parentElement.querySelector("h2").textContent} Details`;
-                detailsContent.textContent = defaultData[currentServiceId];detailsModal.style.display = "block";
+                detailsContent.textContent = defaultData[currentServiceId];
+                detailsModal.style.display = "block";
             });
         });
 
@@ -1163,7 +1174,8 @@ Hospital Road, Comilla`
         document.querySelectorAll(".googleSearchBtn").forEach(btn => {
             btn.addEventListener("click", (e) => {
                 e.preventDefault();
-                const serviceName = btn.parentElement.parentElement.querySelector("h2").textContent;const query = `${serviceName} in Comilla`;
+                const serviceName = btn.parentElement.parentElement.querySelector("h2").textContent;
+                const query = `${serviceName} in Comilla`;
                 const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
                 window.open(url, "_blank");
             });
@@ -1172,18 +1184,57 @@ Hospital Road, Comilla`
         // Open Enter Information modal
         document.querySelectorAll(".enterInfoBtn").forEach(btn => {
             btn.addEventListener("click", (e) => {
-                e.preventDefault();currentServiceId = btn.getAttribute("data-id");
+                e.preventDefault();
+                currentServiceId = btn.getAttribute("data-id");
                 enterInfoTitle.textContent = `Provide Your Information - ${btn.parentElement.parentElement.querySelector("h2").textContent}`;
-                infoForm.reset(); // Reset the form
-                renderSavedInfo(); // Render saved information
+                infoForm.reset();
+                currentEditingIndex = null;
+                loadSavedInfo();
                 enterInfoModal.style.display = "block";
             });
         });
 
-        // Save information
+        // Load saved information from Firebase
+        function loadSavedInfo() {
+            savedInfoList.innerHTML = "<p>Loading...</p>";
+            
+            database.ref(`services/${currentServiceId}`).once('value')
+                .then((snapshot) => {
+                    const data = snapshot.val();
+                    savedInfoList.innerHTML = "";
+                    
+                    if (data) {
+                        Object.values(data).forEach((info, index) => {
+                            const item = document.createElement("div");
+                            item.className = "saved-info-item";
+                            item.innerHTML = `
+                                <div>
+                                    <strong>Name:</strong> ${info.name}<br>
+                                    <strong>Number:</strong> ${info.number}<br>
+                                    <strong>Address:</strong> ${info.address}
+                                </div>
+                                <div>
+                                    <button onclick="editInfo('${info.id}')">Edit</button>
+                                    <button onclick="deleteInfo('${info.id}')">Delete</button>
+                                </div>
+                            `;
+                            savedInfoList.appendChild(item);
+                        });
+                    } else {
+                        savedInfoList.innerHTML = "<p>No information saved yet.</p>";
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error loading data:", error);
+                    savedInfoList.innerHTML = "<p>Error loading data. Please try again.</p>";
+                });
+        }
+
+        // Save information to Firebase
         infoForm.addEventListener("submit", (e) => {
             e.preventDefault();
-            const name = document.getElementById("name").value;const number = document.getElementById("number").value;
+            const name = document.getElementById("name").value;
+            const number = document.getElementById("number").value;
             const address = document.getElementById("address").value;
 
             if (!name || !number || !address) {
@@ -1191,58 +1242,71 @@ Hospital Road, Comilla`
                 return;
             }
 
-            // Save the information
-            if (!savedInfo[currentServiceId]) {
-                savedInfo[currentServiceId] = [];
+            const infoData = {
+                name,
+                number,
+                address,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            };
+
+            if (currentEditingIndex) {
+                // Update existing entry
+                database.ref(`services/${currentServiceId}/${currentEditingIndex}`).update(infoData)
+                    .then(() => {
+                        alert("Information updated successfully!");
+                        loadSavedInfo();
+                        infoForm.reset();
+                        currentEditingIndex = null;
+                    })
+                    .catch((error) => {
+                        console.error("Error updating data:", error);
+                        alert("Error updating information. Please try again.");
+                    });
+            } else {
+                // Add new entry
+                const newInfoRef = database.ref(`services/${currentServiceId}`).push();
+                newInfoRef.set(infoData)
+                    .then(() => {
+                        alert("Information saved successfully!");
+                        loadSavedInfo();
+                        infoForm.reset();
+                    })
+                    .catch((error) => {
+                        console.error("Error saving data:", error);
+                        alert("Error saving information. Please try again.");
+                    });
             }
-            savedInfo[currentServiceId].push({ name, number, address });
-
-            // Render the updated list
-            renderSavedInfo();
-
-            // Reset the form
-            infoForm.reset();
         });
 
-        // Render saved information
-        function renderSavedInfo() {
-            savedInfoList.innerHTML = "";
-            if (savedInfo[currentServiceId]) {
-                savedInfo[currentServiceId].forEach((info, index) => {
-                    const item = document.createElement("div");
-                    item.className = "saved-info-item";
-                    item.innerHTML = `
-                        <div>
-                            <strong>Name:</strong> ${info.name}<br>
-                            <strong>Number:</strong> ${info.number}<br>
-                            <strong>Address:</strong> ${info.address}</div>
-                        <div>
-                            <button onclick="editInfo(${index})">Edit</button>
-                            <button onclick="deleteInfo(${index})">Delete</button>
-                        </div>
-                    `;
-                    savedInfoList.appendChild(item);
-                });
-            }
-        }
-
         // Edit information
-        window.editInfo = function (index) {const info = savedInfo[currentServiceId][index];
-            document.getElementById("name").value = info.name;
-            document.getElementById("number").value = info.number;
-            document.getElementById("address").value = info.address;
-
-            // Remove the old entry
-            savedInfo[currentServiceId].splice(index, 1);
-
-            // Render the updated list
-            renderSavedInfo();
+        window.editInfo = function (infoId) {
+            database.ref(`services/${currentServiceId}/${infoId}`).once('value')
+                .then((snapshot) => {
+                    const info = snapshot.val();
+                    document.getElementById("name").value = info.name;
+                    document.getElementById("number").value = info.number;
+                    document.getElementById("address").value = info.address;
+                    currentEditingIndex = infoId;
+                })
+                .catch((error) => {
+                    console.error("Error loading info for edit:", error);
+                    alert("Error loading information for editing. Please try again.");
+                });
         };
         
         // Delete information
-        window.deleteInfo = function (index) {
-            savedInfo[currentServiceId].splice(index, 1);
-            renderSavedInfo();
+        window.deleteInfo = function (infoId) {
+            if (confirm("Are you sure you want to delete this information?")) {
+                database.ref(`services/${currentServiceId}/${infoId}`).remove()
+                    .then(() => {
+                        alert("Information deleted successfully!");
+                        loadSavedInfo();
+                    })
+                    .catch((error) => {
+                        console.error("Error deleting data:", error);
+                        alert("Error deleting information. Please try again.");
+                    });
+            }
         };
 
         // Close modals
